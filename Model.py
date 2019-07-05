@@ -8,6 +8,13 @@ mydb = mysql.connector.connect(
 )
 q = mydb.cursor()
 
+def all(tabel):
+
+	q.execute("SELECT * from `"+tabel+"`")
+	data = q.fetchall()
+
+	return data
+
 def show(tabel, vals=[]):
 	
 	# select = ['judul','image']
@@ -19,13 +26,6 @@ def show(tabel, vals=[]):
 
 	
 	q.execute("SELECT "+val+" FROM `"+tabel+"`")
-	data = q.fetchall()
-
-	return data
-
-def all(tabel):
-
-	q.execute("SELECT * from `"+tabel+"`")
 	data = q.fetchall()
 
 	return data
@@ -42,8 +42,22 @@ def add(tabel, vals=[]):
 	mydb.commit()
 	return
 
+def edit(tabel, id, vals=[]):
+
+	val = str(vals)
+	replace = (("[",""),("]",""),("None","NULL"),('"',""))
+	for x in replace:
+		val = val.replace(*x)
+
+
+	q.execute("UPDATE `"+tabel+"` SET "+val+" WHERE `"+tabel+"`.`id` = "+id+";")
+	mydb.commit()
+	return
+
 def delete(tabel,id):
 
 	q.execute("DELETE FROM `"+tabel+"` WHERE `"+tabel+"`.`id` = "+id+"")
 	mydb.commit()
 	return
+
+edit('buku','3', ["judul='album-m'"])
