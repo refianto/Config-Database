@@ -47,6 +47,3 @@ def delete(tabel,id):
 	q.execute("DELETE FROM `"+tabel+"` WHERE `"+tabel+"`.`id` = "+id+"")
 	mydb.commit()
 	return
-
-
-print(add('buku',[None, 'books', None]))
